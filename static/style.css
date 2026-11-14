@@ -158,6 +158,7 @@ body.playing{overflow:hidden}
   background:var(--sun);color:var(--ink);border:2px solid var(--ink);border-radius:var(--wobble)}
 
 .judge{position:absolute;right:8%;top:40%;z-index:4;opacity:0;pointer-events:none;font:clamp(2.4rem,8vw,5rem) var(--body);text-shadow:4px 4px 0 var(--ink)}
+.judge [hidden]{display:none !important}
 .judge img{display:block;width:clamp(9rem,22vw,17rem);height:auto;filter:drop-shadow(4px 4px 0 var(--ink))}
 .judge-text{display:block}
 .judge.pop{animation:judge .7s ease-out}
