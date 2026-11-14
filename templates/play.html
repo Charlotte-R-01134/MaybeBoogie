@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero card">
+  <h1>Paste a dance video. Start dancing.</h1>
+  <p>Drop in a YouTube link. We map the moves, your camera does the judging.</p>
+  {% if user.is_authenticated %}
+    <form class="paste" method="post" action="/submit/">
+      {% csrf_token %}
+      <input type="url" name="url" placeholder="https://www.youtube.com/watch?v=..." aria-label="YouTube link" required>
+      <button class="btn btn-pink" type="submit">Make it playable</button>
+    </form>
+    <p class="hint">Single-dancer videos work best.</p>
+  {% else %}
+    <div class="actions">
+      <a class="btn btn-pink" href="{% url 'login' %}?next=/">Log in to add a video</a>
+      <a class="btn btn-sky" href="#library">Browse tracks</a>
+    </div>
+  {% endif %}
+</section>
+
+<h2 class="section-title" id="library">Ready to dance</h2>
+<ul class="grid">
+  {% for t in tracks %}
+  <li class="card track">
+    <img src="https://img.youtube.com/vi/{{ t.youtube_id }}/hqdefault.jpg" alt="" loading="lazy">
+    <h3>{{ t.title }}</h3>
+    <div class="meta">
+      <span class="pill">Best: {{ t.best_score|default:"none yet" }}</span>
+      <a class="btn btn-small btn-pink" href="/play/{{ t.id }}/">Play</a>
+    </div>
+  </li>
+  {% empty %}
+  <li class="empty">No tracks yet. Paste a link above to make the first one.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
