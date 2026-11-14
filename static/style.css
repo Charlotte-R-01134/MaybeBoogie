@@ -160,6 +160,11 @@ body.playing{overflow:hidden}
 .judge{position:absolute;right:8%;top:40%;z-index:4;opacity:0;pointer-events:none;font:clamp(2.4rem,8vw,5rem) var(--body);text-shadow:4px 4px 0 var(--ink)}
 .judge [hidden]{display:none !important}
 .judge img{display:block;width:clamp(9rem,22vw,17rem);height:auto;filter:drop-shadow(4px 4px 0 var(--ink))}
+.judge.slay img{filter:brightness(0) saturate(100%) invert(77%) sepia(83%) saturate(686%) hue-rotate(2deg) brightness(105%) contrast(101%) drop-shadow(4px 4px 0 var(--ink))}
+.judge.awesome img{filter:brightness(0) saturate(100%) invert(72%) sepia(45%) saturate(650%) hue-rotate(95deg) brightness(93%) contrast(91%) drop-shadow(4px 4px 0 var(--ink))}
+.judge.cool img{filter:brightness(0) saturate(100%) invert(63%) sepia(60%) saturate(1090%) hue-rotate(165deg) brightness(93%) contrast(90%) drop-shadow(4px 4px 0 var(--ink))}
+.judge.sweet img{filter:brightness(0) saturate(100%) invert(56%) sepia(71%) saturate(1778%) hue-rotate(296deg) brightness(101%) contrast(101%) drop-shadow(4px 4px 0 var(--ink))}
+.judge.meh img{filter:brightness(0) saturate(100%) invert(57%) sepia(73%) saturate(447%) hue-rotate(345deg) brightness(98%) contrast(94%) drop-shadow(4px 4px 0 var(--ink))}
 .judge-text{display:block}
 .judge.pop{animation:judge .7s ease-out}
 .judge.perfect{color:var(--sun)} .judge.good{color:var(--mint)} .judge.ok{color:var(--sky)} .judge.miss{color:var(--pink)}
