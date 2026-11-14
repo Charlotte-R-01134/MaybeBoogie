@@ -5,7 +5,7 @@ const $ = id => document.getElementById(id);
 const stage = $("stage"), song = $("song"), overlay = $("overlay"), msg = $("msg"), count = $("count");
 const actions = $("overlay-actions"), go = $("go"), results = $("results"), fill = $("songfill");
 const scoreEl = $("score"), comboEl = $("combo"), judgeEl = $("judge");
-const judgeImage = $("judge-image"), noteEl = $("note");
+const judgeImage = $("judge-image"), judgeText = $("judge-text"), noteEl = $("note");
 const cam = window.camera;
 const skel = document.querySelector("#cam canvas"), sctx = skel.getContext("2d");
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -121,13 +121,21 @@ function tick(t, now) {
   if (result === "MISS" || !imageBase) {
     judgeImage.hidden = true;
     judgeImage.alt = "";
-    judgeEl.dataset.label = result;
+    judgeText.hidden = false;
+    judgeText.textContent = result;
   } else {
     judgeImage.src = imageBase + imageName;
     judgeImage.alt = result;
     judgeImage.hidden = false;
-    judgeEl.dataset.label = "";
+    judgeText.hidden = true;
+    judgeText.textContent = "";
   }
+  judgeImage.onerror = () => {
+    judgeImage.hidden = true;
+    judgeText.hidden = false;
+    judgeText.textContent = result;
+    console.error(`Could not load judge image: ${judgeImage.src}`);
+  };
   render();
 }
 
