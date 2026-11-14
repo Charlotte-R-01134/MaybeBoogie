@@ -6,6 +6,13 @@ const stage = $("stage"), song = $("song"), overlay = $("overlay"), msg = $("msg
 const actions = $("overlay-actions"), go = $("go"), results = $("results"), fill = $("songfill");
 const scoreEl = $("score"), comboEl = $("combo"), judgeEl = $("judge");
 const judgeImage = $("judge-image"), judgeText = $("judge-text"), noteEl = $("note");
+const judgeFilters = {
+  SLAY: "brightness(0) saturate(100%) invert(77%) sepia(83%) saturate(686%) hue-rotate(2deg) brightness(105%) contrast(101%)",
+  AWESOME: "brightness(0) saturate(100%) invert(72%) sepia(45%) saturate(650%) hue-rotate(95deg) brightness(93%) contrast(91%)",
+  COOL: "brightness(0) saturate(100%) invert(63%) sepia(60%) saturate(1090%) hue-rotate(165deg) brightness(93%) contrast(90%)",
+  SWEET: "brightness(0) saturate(100%) invert(56%) sepia(71%) saturate(1778%) hue-rotate(296deg) brightness(101%) contrast(101%)",
+  MEH: "brightness(0) saturate(100%) invert(57%) sepia(73%) saturate(447%) hue-rotate(345deg) brightness(98%) contrast(94%)",
+};
 const cam = window.camera;
 const skel = document.querySelector("#cam canvas"), sctx = skel.getContext("2d");
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -121,11 +128,13 @@ function tick(t, now) {
   if (result === "MISS" || !imageBase) {
     judgeImage.hidden = true;
     judgeImage.alt = "";
+    judgeImage.style.filter = "";
     judgeText.hidden = false;
     judgeText.textContent = result;
   } else {
     judgeImage.src = imageBase + imageName;
     judgeImage.alt = result;
+    judgeImage.style.filter = `${judgeFilters[result]} drop-shadow(4px 4px 0 var(--ink))`;
     judgeImage.hidden = false;
     judgeText.hidden = true;
     judgeText.textContent = "";
