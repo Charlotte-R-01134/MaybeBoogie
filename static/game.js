@@ -7,11 +7,11 @@ const actions = $("overlay-actions"), go = $("go"), results = $("results"), fill
 const scoreEl = $("score"), comboEl = $("combo"), judgeEl = $("judge");
 const judgeImage = $("judge-image"), judgeText = $("judge-text"), noteEl = $("note");
 const judgeFilters = {
-  SLAY: "brightness(0) saturate(100%) invert(77%) sepia(83%) saturate(686%) hue-rotate(2deg) brightness(105%) contrast(101%)",
-  AWESOME: "brightness(0) saturate(100%) invert(72%) sepia(45%) saturate(650%) hue-rotate(95deg) brightness(93%) contrast(91%)",
-  COOL: "brightness(0) saturate(100%) invert(63%) sepia(60%) saturate(1090%) hue-rotate(165deg) brightness(93%) contrast(90%)",
-  SWEET: "brightness(0) saturate(100%) invert(56%) sepia(71%) saturate(1778%) hue-rotate(296deg) brightness(101%) contrast(101%)",
-  MEH: "brightness(0) saturate(100%) invert(57%) sepia(73%) saturate(447%) hue-rotate(345deg) brightness(98%) contrast(94%)",
+  SLAY: "hue-rotate(105deg) saturate(1.4)",
+  AWESOME: "hue-rotate(220deg) saturate(1.3)",
+  COOL: "hue-rotate(285deg) saturate(1.2)",
+  SWEET: "saturate(1.2)",
+  MEH: "hue-rotate(45deg) saturate(1.4)",
 };
 const cam = window.camera;
 const skel = document.querySelector("#cam canvas"), sctx = skel.getContext("2d");
