@@ -1,0 +1,9 @@
+<aside class="cam" id="cam" {% if autostart %}data-autostart{% endif %} aria-label="Your camera preview">
+  <video playsinline muted></video>
+  <canvas></canvas>
+  <div class="cam-off">
+    <p class="cam-msg">Check your framing before you dance.</p>
+    <button class="btn btn-small btn-sky" type="button">Turn on camera</button>
+  </div>
+  <span class="pill cam-tag">You</span>
+</aside>

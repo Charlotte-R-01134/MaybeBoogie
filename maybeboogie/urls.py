@@ -18,12 +18,23 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import django.contrib.auth.views as auth_views
+import game.views as game
+
+from django.conf import settings
+from django.conf.urls.static import static#
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("login/", auth_views.LoginView.as_view(template_name="login.html", redirect_authenticated_user=True, next_page="account"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(next_page="/"), name="logout"),
     path("", auth_views.TemplateView.as_view(template_name="index.html"), name="index"),
-    path("account/", auth_views.TemplateView.as_view(template_name="account.html"), name="account"),
-    path("play/", auth_views.TemplateView.as_view(template_name="play.html"), name="play"),
+    path("account/", game.account, name="account"),
+    path("play/", game.play_library, name="play"),
+    path("play/<int:track_id>/", game.play_track, name="play_track"),
+    path("submit/", game.submit, name="submit"),
+    path("track/<int:track_id>/", game.track_detail, name="track_detail"),
+    path("track/<int:track_id>/status/", game.track_status, name="track_status"),
+    path("track/<int:track_id>/score/", game.save_score, name="save_score"),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -38,7 +38,7 @@ def download_video(track, on_progress=None):
     if duration > MAX_VIDEO_DURATION:
         raise VideoError("Video is too long. Maximum duration is 10 minutes.")
 
-    track.title = info.get("title" or track.title)[:200]
+    track.title = (info.get("title") or track.title)[:200]
     track.save(update_fields=["title"])
 
     def hook(d):

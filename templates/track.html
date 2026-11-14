@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="card job" id="job" data-url="{% url 'track_status' track.id %}">
+  <img class="thumb" src="https://img.youtube.com/vi/{{ track.youtube_id }}/hqdefault.jpg" alt="">
+  <div>
+    <h1 id="title">{{ track.title }}</h1>
+    <ol class="steps" id="steps" aria-label="Progress">
+      <li data-s="downloading">Download</li>
+      <li data-s="analysing">Analyse</li>
+      <li data-s="syncing">Sync</li>
+      <li data-s="ready">Ready</li>
+    </ol>
+    <p class="stage" id="stage-text" aria-live="polite">Waiting in line...</p>
+    <div class="bar"><div class="fill" id="fill"></div><span class="pct" id="pct">0%</span></div>
+    <div class="actions">
+      <button id="play" class="btn btn-pink" type="button" hidden>Let's dance</button>
+      <form id="retry" method="post" action="{% url 'submit' %}" hidden>
+        {% csrf_token %}
+        <input type="hidden" name="url" value="https://www.youtube.com/watch?v={{ track.youtube_id }}">
+        <button class="btn" type="submit">Try again</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<div class="play-stage" id="stage" hidden data-score-url="{% url 'save_score' track_id=track.id %}">
+  <video id="song" playsinline preload="auto"></video>
+
+  <div class="songbar"><div id="songfill"></div></div>
+  <header class="hud">
+    <button class="btn btn-small" id="quit" type="button">Quit</button>
+    <div class="hud-title" id="hud-title">{{ track.title }}</div>
+    <div class="hud-score"><span>Score</span> <b id="score">0</b> <span class="combo" id="combo"></span></div>
+  </header>
+  <p class="note" id="note" hidden></p>
+  <div class="judge" id="judge" aria-live="polite"></div>
+
+  <div class="overlay" id="overlay">
+    <p class="msg" id="msg">Get ready...</p>
+    <div id="count" aria-live="assertive"></div>
+    <div class="card results" id="results" hidden>
+      <div class="stars" id="r-stars"></div>
+      <div class="big" id="r-score">0</div>
+      <p><span id="r-acc"></span> accuracy, best combo <b id="r-combo"></b></p>
+      <p class="counts" id="r-counts"></p>
+    </div>
+    <div class="actions" id="overlay-actions" hidden>
+      <button class="btn btn-pink" id="go" type="button">Start</button>
+      <button class="btn btn-sky" id="leave" type="button">Back</button>
+    </div>
+  </div>
+
+  {% include "camera.html" %}
+</div>
+
+<script>
+const job = document.getElementById("job");
+const ORDER = ["queued", "downloading", "analysing", "syncing", "ready"];
+const text = {
+  queued: "Waiting in line...", downloading: "Grabbing the video...",
+  analysing: "Spotting the dancer...", syncing: "Matching the moves to the music...",
+  ready: "Ready. Let's dance!", failed: "That one didn't work."
+};
+window.trackInfo = { video: "", keypoints: "" };   // read by game.js when the game starts
+
+async function poll() {
+  try {
+    const d = await (await fetch(job.dataset.url)).json();
+    if (d.title) {
+      document.getElementById("title").textContent = d.title;
+      document.getElementById("hud-title").textContent = d.title;
+    }
+    window.trackInfo = { video: d.video_url, keypoints: d.keypoints_url };
+    document.getElementById("stage-text").textContent = d.status === "failed" ? d.error : text[d.status];
+    document.getElementById("fill").style.width = d.progress + "%";
+    document.getElementById("pct").textContent = d.progress + "%";
+    job.classList.toggle("failed", d.status === "failed");
+
+    const cur = ORDER.indexOf(d.status);
+    document.querySelectorAll("#steps li").forEach(li => {
+      const i = ORDER.indexOf(li.dataset.s);
+      li.className = d.status === "ready" || i < cur ? "done" : i === cur ? "now" : "";
+    });
+
+    if (d.status === "ready") return document.getElementById("play").hidden = false;
+    if (d.status === "failed") return document.getElementById("retry").hidden = false;
+  } catch (e) { /* network blip: keep polling */ }
+  setTimeout(poll, 1000);
+}
+poll();
+</script>
+<script src="{% static 'camera.js' %}"></script>
+<script type="module" src="{% static 'game.js' %}"></script>
+{% endblock %}

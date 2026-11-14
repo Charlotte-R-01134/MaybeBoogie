@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ track.title }} - Maybe Boogie{% endblock %}
+{% block content %}
+<section class="hero card">
+  <h1>{{ track.title }}</h1>
+  <video controls playsinline preload="metadata" style="width: 100%;">
+    <source src="{{ track.video_file.url }}" type="video/mp4">
+    Your browser does not support video playback.
+  </video>
+  <p><a class="btn btn-pink" href="{% url 'play' %}">Back to tracks</a></p>
+</section>
+{% endblock %}
