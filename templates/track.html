@@ -24,7 +24,7 @@
   </div>
 </section>
 
-<div class="play-stage" id="stage" hidden data-score-url="{% url 'save_score' track_id=track.id %}">
+<div class="play-stage" id="stage" hidden data-score-url="{% url 'save_score' track_id=track.id %}" data-score-image-base="{% static 'scores/' %}">
   <video id="song" playsinline preload="auto"></video>
 
   <div class="songbar"><div id="songfill"></div></div>
@@ -34,7 +34,9 @@
     <div class="hud-score"><span>Score</span> <b id="score">0</b> <span class="combo" id="combo"></span></div>
   </header>
   <p class="note" id="note" hidden></p>
-  <div class="judge" id="judge" aria-live="polite"></div>
+  <div class="judge" id="judge" aria-live="polite">
+    <img id="judge-image" alt="" hidden>
+  </div>
 
   <div class="overlay" id="overlay">
     <p class="msg" id="msg">Get ready...</p>

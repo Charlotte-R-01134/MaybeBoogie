@@ -4,7 +4,8 @@ import { POINTS, TICK, bestMatch, judge, landmarkVecs, mirror, prepareReference,
 const $ = id => document.getElementById(id);
 const stage = $("stage"), song = $("song"), overlay = $("overlay"), msg = $("msg"), count = $("count");
 const actions = $("overlay-actions"), go = $("go"), results = $("results"), fill = $("songfill");
-const scoreEl = $("score"), comboEl = $("combo"), judgeEl = $("judge"), noteEl = $("note");
+const scoreEl = $("score"), comboEl = $("combo"), judgeEl = $("judge");
+const judgeImage = $("judge-image"), noteEl = $("note");
 const cam = window.camera;
 const skel = document.querySelector("#cam canvas"), sctx = skel.getContext("2d");
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -115,7 +116,18 @@ function tick(t, now) {
   maxCombo = Math.max(maxCombo, combo);
   judgeEl.className = "judge"; void judgeEl.offsetWidth;
   judgeEl.className = "judge pop " + result.toLowerCase();
-  judgeEl.textContent = result;
+  const imageName = result.toLowerCase() + ".PNG";
+  const imageBase = stage.dataset.scoreImageBase;
+  if (result === "MISS" || !imageBase) {
+    judgeImage.hidden = true;
+    judgeImage.alt = "";
+    judgeEl.dataset.label = result;
+  } else {
+    judgeImage.src = imageBase + imageName;
+    judgeImage.alt = result;
+    judgeImage.hidden = false;
+    judgeEl.dataset.label = "";
+  }
   render();
 }
 
