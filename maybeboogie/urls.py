@@ -23,5 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("login/", auth_views.LoginView.as_view(template_name="login.html", redirect_authenticated_user=True, next_page="/"), name="login"),
     path("logout/", auth_views.LogoutView.as_view(next_page="/"), name="logout"),
-    path("", auth_views.TemplateView.as_view(template_name="base.html"), name="index"),
+    path("", auth_views.TemplateView.as_view(template_name="index.html"), name="index"),
+    path("account/", auth_views.TemplateView.as_view(template_name="account.html"), name="account"),
 ]

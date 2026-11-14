@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }} - Maybe Bookie{% endblock %}
+{% block content %}
+<section class="hero card">
+  <h1>Hey, {{ user.username }}.</h1>
+  <p>Ready for another round?</p>
+  <a class="btn btn-pink" href="/">Pick a song</a>
+</section>
+
+<section class="stats">
+  <div class="card stat"><span class="num">{{ total_plays|default:0 }}</span>songs danced</div>
+  <div class="card stat"><span class="num">{{ best_score|default:0 }}</span>best score</div>
+  <div class="card stat"><span class="num">{{ best_combo|default:0 }}</span>longest combo</div>
+</section>
+
+<h2 class="section-title">Your recent scores</h2>
+<ul class="scores">
+  {% for s in scores %}
+  <li class="card">
+    <img src="https://img.youtube.com/vi/{{ s.track.youtube_id }}/hqdefault.jpg" alt="" loading="lazy">
+    <div class="info"><strong>{{ s.track.title }}</strong><span class="when">{{ s.created_at|date:"j M Y" }}</span></div>
+    <span class="pts">{{ s.score }}</span>
+  </li>
+  {% empty %}
+  <li class="empty">No scores yet. Pick a song and shake it.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

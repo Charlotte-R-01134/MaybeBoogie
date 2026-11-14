@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Maybe Boogie{% endblock %}
+
+{% block content %}
+<style>
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: url("{% static 'background.gif' %}") center/contain no-repeat;
+    }
+    body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        body::before { background-image: none; }
+    }
+</style>
+{% endblock %}
