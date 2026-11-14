@@ -28,6 +28,7 @@
       {% endif %}
     </nav>
   </header>
+  {% for m in messages %}<div class="error wrap" role="alert">{{ m }}</div>{% endfor %}
   <main class="wrap">{% block content %}{% endblock %}</main>
 </body>
 </html>
