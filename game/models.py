@@ -18,10 +18,18 @@ class Track(models.Model):
         choices=TrackStatus.choices,
         default=TrackStatus.QUEUED,
     )
-    progress = models.FloatField(default=0.0) # progress percentage from 0.0 to 100.0
+    progress = models.IntegerField(0, 100,default=0) # progress percentage from 0.0 to 100.0
     error = models.TextField(blank=True, null=True) # error message if status is FAILED
-    bpm = models.FloatField(blank=True, null=True) # beats per minute
+    bpm = models.IntegerField(blank=True, null=True) # beats per minute
     offset = models.FloatField(blank=True, null=True) # offset in seconds
     keypoints_file = models.FileField(upload_to="keypoints/", blank=True, null=True) # path to keypoints file
     submitted_by = models.ForeignKey("auth.User", on_delete=models.CASCADE) # user who submitted the track, null if user is deleted
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Score(models.Model):
+    track = models.ForeignKey(Track, on_delete=models.CASCADE)
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    score = models.IntegerField(0, 100, default=0) # score from 0 to 100
+    accuracy = models.FloatField(0.0, 1.0, default=0.0) # accuracy from 0.0 to 1.0
+    max_combo = models.IntegerField(default=0) # max combo achieved
     created_at = models.DateTimeField(auto_now_add=True)
