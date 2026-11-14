@@ -1,0 +1,19 @@
+[project]
+name = "maybeboogie"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Charlotte-R", email = "49107073+Charlotte-R-01134@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "django>=6.1.3",
+]
+
+[project.scripts]
+maybeboogie = "maybeboogie:main"
+
+[build-system]
+requires = ["uv_build>=0.13.8,<0.14.0"]
+build-backend = "uv_build"
