@@ -53,7 +53,13 @@ def download_video(track, on_progress=None):
                 on_progress(d["downloaded_bytes"] / total_bytes)
 
     ydl_opts = {
-        "format": "bv*[height<=480][ext=mp4][vcodec^=avc1]+ba[ext=m4a]/b[height<=480][ext=mp4][vcodec^=avc1]",
+        "format": (
+            "bv*[height<=480][ext=mp4][vcodec^=avc1]+ba[ext=m4a]"
+            "/b[height<=480][ext=mp4][vcodec^=avc1]"
+            "/bv*[height<=480][ext=mp4]+ba[ext=m4a]"
+            "/b[height<=480][ext=mp4]"
+            "/best[height<=480]"
+        ),
         "merge_output_format": "mp4",
         "outtmpl": str(out_dir / f"{vid}.%(ext)s"),
         "noplaylist": True,
