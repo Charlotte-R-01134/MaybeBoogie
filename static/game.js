@@ -10,10 +10,22 @@ const cam = window.camera;
 const skel = document.querySelector("#cam canvas"), sctx = skel.getContext("2d");
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const DRAW = [[5, 7], [7, 9], [6, 8], [8, 10], [5, 6], [11, 12], [5, 11], [6, 12], [11, 13], [13, 15], [12, 14], [14, 16]];
+const imageBase = stage.dataset.scoreImageBase;
+const judgeImageUrls = Object.fromEntries(
+  ["SLAY", "AWESOME", "COOL", "SWEET", "MEH"].map(result => [
+    result,
+    imageBase + result.toLowerCase() + ".PNG",
+  ]),
+);
+Object.values(judgeImageUrls).forEach(url => {
+  const image = new Image();
+  image.src = url;
+});
 
 let ref = null, scoring = false, running = false, raf = 0, goAction = null;
 let points = 0, combo = 0, maxCombo = 0, ticks = 0, expectedTicks = 1, lastTick = 0;
 let lastPose = 0, lastPlayer = null, lastPlayerAt = 0;
+let displayedJudge = null;
 const counts = { SLAY: 0, AWESOME: 0, COOL: 0, SWEET: 0, MEH: 0, MISS: 0 } ;
 
 // ---------- reference choreography ----------
@@ -116,28 +128,21 @@ function tick(t, now) {
   maxCombo = Math.max(maxCombo, combo);
   judgeEl.className = "judge"; void judgeEl.offsetWidth;
   judgeEl.className = "judge pop " + result.toLowerCase();
-  const imageName = result.toLowerCase() + ".PNG";
-  const imageBase = stage.dataset.scoreImageBase;
-  if (result === "MISS" || !imageBase) {
-    judgeImage.hidden = true;
-    judgeImage.alt = "";
-    judgeImage.style.filter = "";
-    judgeText.hidden = false;
-    judgeText.textContent = result;
-  } else {
-    judgeImage.src = imageBase + imageName;
-    judgeImage.alt = result;
-    judgeImage.style.filter = "";
-    judgeImage.hidden = false;
-    judgeText.hidden = true;
-    judgeText.textContent = "";
+  if (result !== displayedJudge) {
+    displayedJudge = result;
+    if (result === "MISS" || !imageBase) {
+      judgeImage.hidden = true;
+      judgeImage.alt = "";
+      judgeText.hidden = false;
+      judgeText.textContent = result;
+    } else {
+      judgeImage.src = judgeImageUrls[result];
+      judgeImage.alt = result;
+      judgeImage.hidden = false;
+      judgeText.hidden = true;
+      judgeText.textContent = "";
+    }
   }
-  judgeImage.onerror = () => {
-    judgeImage.hidden = true;
-    judgeText.hidden = false;
-    judgeText.textContent = result;
-    console.error(`Could not load judge image: ${judgeImage.src}`);
-  };
   render();
 }
 
