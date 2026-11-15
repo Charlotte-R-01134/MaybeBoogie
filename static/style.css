@@ -166,7 +166,7 @@ body.playing{overflow:hidden}
 
 .overlay{position:absolute;inset:0;z-index:3;display:grid;place-content:center;justify-items:center;gap:1.2rem;
   overflow:auto;text-align:center;background:rgba(34,34,59,.74);padding:1rem}
-.overlay.results-visible{gap:.4rem;overflow:hidden;padding:.5rem}
+.overlay.results-visible{align-content:start;gap:.4rem;overflow:hidden;padding:clamp(.5rem,3vh,1.5rem) .5rem .5rem}
 .overlay .msg{font:clamp(1.8rem,5vw,3rem) var(--body);margin:0}
 #count{min-height:1em;font:clamp(6rem,24vw,13rem)/1 var(--body);text-shadow:6px 6px 0 var(--pink)}
 #count.pop{animation:pop .9s ease-out}
