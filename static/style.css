@@ -179,6 +179,7 @@ body.playing{overflow:hidden}
 .results-visible .results p{margin:.15rem 0}
 .results p{margin:.3rem 0}
 .results .stars{font-size:2.4rem;color:var(--sun);text-shadow:2px 2px 0 var(--ink)}
+.results .stars .star{display:inline-block;width:clamp(2.4rem,6vw,3.6rem);height:clamp(2.4rem,6vw,3.6rem);overflow:hidden}
 .results .big{font:clamp(3rem,10vw,5.5rem)/1 var(--body);color:var(--pink)}
 .results .counts{font-size:1rem;opacity:.8}
 
