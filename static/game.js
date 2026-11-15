@@ -132,8 +132,8 @@ function finish() {
   count.textContent = ""; judgeEl.className = "judge";
   msg.textContent = scoring ? "Nice moves!" : "That's the song!";
   const final = liveScore(), accuracy = ticks ? points / (ticks * POINTS.SLAY) : 0, n = stars(accuracy);
-  const starFull = "<span class='star full'><img src='" + imageBase + "full.png' alt='★'></span>";
-  const starEmpty = "<span class='star empty'><img src='" + imageBase + "empty.png' alt='☆'></span>";
+  const starFull = "<span class='star full'><img src='" + imageBase + "full.PNG' alt='★'></span>";
+  const starEmpty = "<span class='star empty'><img src='" + imageBase + "empty.PNG' alt='☆'></span>";
   $("r-stars").innerHTML = starFull.repeat(n) + starEmpty.repeat(5 - n);
   $("r-score").textContent = final.toLocaleString();
   $("r-acc").textContent = Math.round(accuracy * 100) + "%";
