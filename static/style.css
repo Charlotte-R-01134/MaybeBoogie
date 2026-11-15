@@ -172,7 +172,7 @@ body.playing{overflow:hidden}
 @keyframes pop{0%{transform:scale(.4) rotate(-8deg);opacity:0}40%{transform:scale(1.12) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0)}}
 
 .results{color:var(--ink);text-align:center;transform:rotate(-1deg);min-width:min(420px,90vw)}
-.game-over{display:block;width:min(420px,90vw);max-height:14vh;height:auto;object-fit:contain;margin:0 auto}
+.game-over{display:block;width:min(420px,90vw);height:clamp(56px,10vh,96px);object-fit:contain;margin:0 auto}
 .results p{margin:.3rem 0}
 .results .stars{font-size:2.4rem;color:var(--sun);text-shadow:2px 2px 0 var(--ink)}
 .results .big{font:clamp(3rem,10vw,5.5rem)/1 var(--body);color:var(--pink)}
