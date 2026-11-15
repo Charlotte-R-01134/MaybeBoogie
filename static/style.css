@@ -157,8 +157,8 @@ body.playing{overflow:hidden}
 .note{position:absolute;top:4.6rem;left:50%;transform:translateX(-50%);z-index:4;margin:0;padding:.1rem 1rem;font-size:1rem;
   background:var(--sun);color:var(--ink);border:2px solid var(--ink);border-radius:var(--wobble)}
 
-.judge{position:absolute;right:8%;top:30%;z-index:4;opacity:0;pointer-events:none;font:clamp(2.4rem,8vw,5rem) var(--body);text-shadow:4px 4px 0 var(--ink); background:var(--paper);border:3px solid var(--ink);border-radius:var(--wobble);padding:.2rem .8rem}
-.judge img{display:block;width:clamp(9rem,22vw,17rem);height:auto;filter:drop-shadow(4px 4px 0 var(--ink))}
+.judge{position:absolute;right:8%;top:30%;z-index:4;opacity:0;pointer-events:none;font:clamp(2.4rem,8vw,5rem) var(--body);text-shadow:4px 4px 0 var(--ink); background:var(--paper);border:3px solid var(--ink);border-radius:var(--wobble);padding:.05rem .4rem}
+.judge img{display:block;width:clamp(5rem,10vw,9rem);height:auto;filter:drop-shadow(4px 4px 0 var(--ink))}
 .judge[data-label]::after{content:attr(data-label)}
 .judge.pop{animation:judge .7s ease-out}
 .judge.perfect{color:var(--sun)} .judge.good{color:var(--mint)} .judge.ok{color:var(--sky)} .judge.miss{color:var(--pink)}
