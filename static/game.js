@@ -136,14 +136,15 @@ function finish() {
   $("r-acc").textContent = Math.round(accuracy * 100) + "%";
   $("r-combo").textContent = maxCombo;
   $("r-counts").textContent = Object.entries(counts).map(([k, v]) => k.toLowerCase() + " " + v).join("  ");
-  results.hidden = false;
+  results.removeAttribute("hidden");
   if (scoring) {
     saveScore(final, accuracy);
   }
   const gameOver = $("game-over");
-  gameOver.hidden = false;
-  gameOver.src = gameOver.src;
-  go.textContent = "Dance again"; goAction = start; actions.hidden = false; overlay.hidden = false;
+  gameOver.removeAttribute("hidden");
+  go.textContent = "Dance again"; goAction = start;
+  actions.removeAttribute("hidden");
+  overlay.removeAttribute("hidden");
 }
 
 async function saveScore(score, accuracy) {
