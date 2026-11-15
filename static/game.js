@@ -130,7 +130,7 @@ function render() {
 function finish() {
   running = false; cancelAnimationFrame(raf); drawSkeleton(null);
   count.textContent = "";
-  count.display = "none";
+  count.style.display = "none";
   judgeEl.className = "judge";
   msg.textContent = scoring ? "Nice moves!" : "That's the song!";
   const final = liveScore(), accuracy = ticks ? points / (ticks * POINTS.SLAY) : 0, n = stars(accuracy);
