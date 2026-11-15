@@ -132,7 +132,9 @@ function finish() {
   count.textContent = ""; judgeEl.className = "judge";
   msg.textContent = scoring ? "Nice moves!" : "That's the song!";
   const final = liveScore(), accuracy = ticks ? points / (ticks * POINTS.SLAY) : 0, n = stars(accuracy);
-  $("r-stars").textContent = "★".repeat(n) + "☆".repeat(5 - n);
+  const starFull = "<span class='star full'><img src='" + imageBase + "scores/full.png' alt='★'></span>";
+  const starEmpty = "<span class='star empty'><img src='" + imageBase + "scores/empty.png' alt='☆'></span>";
+  $("r-stars").innerHTML = starFull.repeat(n) + starEmpty.repeat(5 - n);
   $("r-score").textContent = final.toLocaleString();
   $("r-acc").textContent = Math.round(accuracy * 100) + "%";
   $("r-combo").textContent = maxCombo;
