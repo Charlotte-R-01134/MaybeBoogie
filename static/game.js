@@ -5,14 +5,14 @@ const $ = id => document.getElementById(id);
 const stage = $("stage"), song = $("song"), overlay = $("overlay"), msg = $("msg"), count = $("count");
 const actions = $("overlay-actions"), go = $("go"), results = $("results"), fill = $("songfill");
 const scoreEl = $("score"), comboEl = $("combo"), judgeEl = $("judge");
-const judgeImage = $("judge-image"), judgeText = $("judge-text"), noteEl = $("note");
+const judgeImage = $("judge-image"), noteEl = $("note");
 const cam = window.camera;
 const skel = document.querySelector("#cam canvas"), sctx = skel.getContext("2d");
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const DRAW = [[5, 7], [7, 9], [6, 8], [8, 10], [5, 6], [11, 12], [5, 11], [6, 12], [11, 13], [13, 15], [12, 14], [14, 16]];
 const imageBase = stage.dataset.scoreImageBase;
 const judgeImageUrls = Object.fromEntries(
-  ["SLAY", "AWESOME", "COOL", "SWEET", "MEH"].map(result => [
+  ["SLAY", "AWESOME", "COOL", "SWEET", "MEH", "MISS"].map(result => [
     result,
     imageBase + result.toLowerCase() + ".PNG",
   ]),
@@ -130,23 +130,14 @@ function tick(t, now) {
   judgeEl.className = "judge pop " + result.toLowerCase();
   if (result !== displayedJudge) {
     displayedJudge = result;
-    if (result === "MISS" || !imageBase) {
-      judgeImage.hidden = true;
-      judgeImage.alt = "";
-      judgeText.hidden = false;
-      judgeText.textContent = result;
-    } else {
-      judgeImage.src = judgeImageUrls[result];
-      judgeImage.alt = result;
-      judgeImage.hidden = false;
-      judgeText.hidden = true;
-      judgeText.textContent = "";
-    }
+    judgeImage.src = judgeImageUrls[result];
+    judgeImage.alt = result;
+    judgeImage.hidden = false;
   }
   render();
 }
 
-const liveScore = () => Math.round(points / (expectedTicks * POINTS.PERFECT) * 10000);
+const liveScore = () => Math.round(points / (expectedTicks * POINTS.SLAY) * 10000);
 function render() {
   scoreEl.textContent = liveScore().toLocaleString();
   comboEl.textContent = combo > 1 ? combo + " combo" : "";
@@ -157,7 +148,7 @@ function finish() {
   count.textContent = ""; judgeEl.className = "judge";
   msg.textContent = scoring ? "Nice moves!" : "That's the song!";
   if (scoring) {
-    const final = liveScore(), accuracy = ticks ? points / (ticks * POINTS.PERFECT) : 0, n = stars(accuracy);
+    const final = liveScore(), accuracy = ticks ? points / (ticks * POINTS.SLAY) : 0, n = stars(accuracy);
     $("r-stars").textContent = "★".repeat(n) + "☆".repeat(5 - n);
     $("r-score").textContent = final.toLocaleString();
     $("r-acc").textContent = Math.round(accuracy * 100) + "%";
