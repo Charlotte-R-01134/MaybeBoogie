@@ -35,7 +35,7 @@ def track_detail(request, track_id):
 
 @login_required
 def account(request):
-    scores = Score.objects.filter(user=request.user).select_related("track")
+    scores = Score.objects.filter(user=request.user).select_related("track").order_by("-created_at")
     return render(request, "account.html", {
         "scores": scores,
         "total_plays": scores.count(),
