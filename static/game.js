@@ -44,8 +44,8 @@ async function start() {
   running = false; cancelAnimationFrame(raf);
   points = combo = maxCombo = ticks = lastTick = 0;
   Object.keys(counts).forEach(k => counts[k] = 0);
-  lastPlayer = null; render();
-  results.hidden = true; actions.hidden = true; overlay.hidden = false; count.textContent = "";
+  lastPlayer = null; displayedJudge = null; render();
+  results.hidden = true; $("game-over").hidden = true; actions.hidden = true; overlay.hidden = false; count.textContent = "";
   stage.hidden = false; document.body.classList.add("playing");
   msg.textContent = "Allow your camera to start...";
 
@@ -130,16 +130,19 @@ function finish() {
   running = false; cancelAnimationFrame(raf); drawSkeleton(null);
   count.textContent = ""; judgeEl.className = "judge";
   msg.textContent = scoring ? "Nice moves!" : "That's the song!";
+  const final = liveScore(), accuracy = ticks ? points / (ticks * POINTS.SLAY) : 0, n = stars(accuracy);
+  $("r-stars").textContent = "★".repeat(n) + "☆".repeat(5 - n);
+  $("r-score").textContent = final.toLocaleString();
+  $("r-acc").textContent = Math.round(accuracy * 100) + "%";
+  $("r-combo").textContent = maxCombo;
+  $("r-counts").textContent = Object.entries(counts).map(([k, v]) => k.toLowerCase() + " " + v).join("  ");
+  results.hidden = false;
   if (scoring) {
-    const final = liveScore(), accuracy = ticks ? points / (ticks * POINTS.SLAY) : 0, n = stars(accuracy);
-    $("r-stars").textContent = "★".repeat(n) + "☆".repeat(5 - n);
-    $("r-score").textContent = final.toLocaleString();
-    $("r-acc").textContent = Math.round(accuracy * 100) + "%";
-    $("r-combo").textContent = maxCombo;
-    $("r-counts").textContent = Object.entries(counts).map(([k, v]) => k.toLowerCase() + " " + v).join("  ");
-    results.hidden = false;
     saveScore(final, accuracy);
   }
+  const gameOver = $("game-over");
+  gameOver.hidden = false;
+  gameOver.src = gameOver.src;
   go.textContent = "Dance again"; goAction = start; actions.hidden = false; overlay.hidden = false;
 }
 
