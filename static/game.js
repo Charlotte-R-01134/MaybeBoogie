@@ -6,13 +6,6 @@ const stage = $("stage"), song = $("song"), overlay = $("overlay"), msg = $("msg
 const actions = $("overlay-actions"), go = $("go"), results = $("results"), fill = $("songfill");
 const scoreEl = $("score"), comboEl = $("combo"), judgeEl = $("judge");
 const judgeImage = $("judge-image"), judgeText = $("judge-text"), noteEl = $("note");
-const judgeFilters = {
-  SLAY: "hue-rotate(105deg) saturate(1.4)",
-  AWESOME: "hue-rotate(220deg) saturate(1.3)",
-  COOL: "hue-rotate(285deg) saturate(1.2)",
-  SWEET: "saturate(1.2)",
-  MEH: "hue-rotate(45deg) saturate(1.4)",
-};
 const cam = window.camera;
 const skel = document.querySelector("#cam canvas"), sctx = skel.getContext("2d");
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -134,7 +127,7 @@ function tick(t, now) {
   } else {
     judgeImage.src = imageBase + imageName;
     judgeImage.alt = result;
-    judgeImage.style.filter = `${judgeFilters[result]} drop-shadow(4px 4px 0 var(--ink))`;
+    judgeImage.style.filter = "";
     judgeImage.hidden = false;
     judgeText.hidden = true;
     judgeText.textContent = "";
