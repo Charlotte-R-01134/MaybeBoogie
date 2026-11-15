@@ -142,7 +142,6 @@ function finish() {
   }
   const gameOver = $("game-over");
   gameOver.removeAttribute("hidden");
-  gameOver.scrollIntoView({ behavior: "smooth", block: "center" });
   // add display block to game over image
   gameOver.style.display = "block";
   go.textContent = "Dance again"; goAction = start;

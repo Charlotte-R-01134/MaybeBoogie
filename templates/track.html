@@ -41,8 +41,8 @@
   <div class="overlay" id="overlay">
     <p class="msg" id="msg">Get ready...</p>
     <div id="count" aria-live="assertive"></div>
+    <img id="game-over" class="game-over" src="{% static 'gameover.gif' %}" alt="Game over" hidden>
     <div class="card results" id="results" hidden>
-      <img id="game-over" class="game-over" src="{% static 'gameover.gif' %}" alt="Game over" hidden>
       <div class="stars" id="r-stars"></div>
       <div class="big" id="r-score">0</div>
       <p><span id="r-acc"></span> accuracy, best combo <b id="r-combo"></b></p>
