@@ -45,6 +45,7 @@ async function start() {
   points = combo = maxCombo = ticks = lastTick = 0;
   Object.keys(counts).forEach(k => counts[k] = 0);
   lastPlayer = null; displayedJudge = null; render();
+  overlay.classList.remove("results-visible");
   results.hidden = true; $("game-over").hidden = true; actions.hidden = true; overlay.hidden = false; count.textContent = "";
   stage.hidden = false; document.body.classList.add("playing");
   msg.textContent = "Allow your camera to start...";
@@ -146,6 +147,7 @@ function finish() {
   gameOver.style.display = "block";
   go.textContent = "Dance again"; goAction = start;
   actions.removeAttribute("hidden");
+  overlay.classList.add("results-visible");
   overlay.removeAttribute("hidden");
 }
 
