@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 import re
 from urllib.parse import urlparse, parse_qs
 import yt_dlp
@@ -31,11 +30,7 @@ def download_video(track, on_progress=None):
     out_dir = Path(settings.MEDIA_ROOT) / "videos"
     out_dir.mkdir(parents=True, exist_ok=True)
     url = f"https://www.youtube.com/watch?v={vid}"
-    cookie_file = os.environ.get("YTDLP_COOKIE_FILE")
-    common_opts = {"quiet": True, "noplaylist": True}
-    if cookie_file:
-        common_opts["cookiefile"] = cookie_file
-    with yt_dlp.YoutubeDL(common_opts) as ydl:
+    with yt_dlp.YoutubeDL({'quiet': True, 'noplaylist': True}) as ydl:
         info = ydl.extract_info(url, download=False)
     if info.get("is_live"):
         raise VideoError("Live videos are not supported.")
@@ -53,13 +48,7 @@ def download_video(track, on_progress=None):
                 on_progress(d["downloaded_bytes"] / total_bytes)
 
     ydl_opts = {
-        "format": (
-            "bv*[height<=480][ext=mp4][vcodec^=avc1]+ba[ext=m4a]"
-            "/b[height<=480][ext=mp4][vcodec^=avc1]"
-            "/bv*[height<=480][ext=mp4]+ba[ext=m4a]"
-            "/b[height<=480][ext=mp4]"
-            "/best[height<=480]"
-        ),
+        "format": "bv*[height<=480][ext=mp4][vcodec^=avc1]+ba[ext=m4a]/b[height<=480][ext=mp4][vcodec^=avc1]",
         "merge_output_format": "mp4",
         "outtmpl": str(out_dir / f"{vid}.%(ext)s"),
         "noplaylist": True,
@@ -67,9 +56,6 @@ def download_video(track, on_progress=None):
         "no_warnings": True,
         "progress_hooks": [hook],
     }
-    if cookie_file:
-        ydl_opts["cookiefile"] = cookie_file
-
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
     if not (out_dir / f"{vid}.mp4").exists():
