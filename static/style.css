@@ -173,7 +173,7 @@ body.playing{overflow:hidden}
 @keyframes pop{0%{transform:scale(.4) rotate(-8deg);opacity:0}40%{transform:scale(1.12) rotate(3deg);opacity:1}100%{transform:scale(1) rotate(0)}}
 
 .results{color:var(--ink);text-align:center;transform:rotate(-1deg);min-width:min(420px,90vw)}
-.game-over{display:block;width:min(420px,90vw);height:clamp(44px,8vh,72px);object-fit:contain;margin:0 auto}
+.game-over{display:block;width:min(420px,90vw);height:clamp(44px,14vh,72px);object-fit:contain;margin:0 auto}
 .results-visible .results{max-height:none;overflow:visible}
 .results-visible .results .big{font-size:clamp(2rem,7vw,4rem)}
 .results-visible .results p{margin:.15rem 0}
