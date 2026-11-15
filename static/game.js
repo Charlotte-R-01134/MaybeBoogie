@@ -34,26 +34,9 @@ async function loadReference(url) {
     try {
       const data = await (await fetch(url)).json();
       return { frames: prepareReference({ aspect: data.aspect || 16 / 9, frames: data.frames }), aspect: data.aspect || 16 / 9, demo: false };
-    } catch (e) { /* fall through to demo */ }
+    } catch (e) {  }
   }
-  return { frames: prepareReference({ aspect: 16 / 9, frames: fakeReference(song.duration || 120) }), aspect: 16 / 9, demo: true };
-}
-
-// DEMO ONLY
-function fakeReference(duration) {
-  const arm = (sx, sy, side, phi) => {
-    const dx = side * Math.sin(phi) * 0.12, dy = Math.cos(phi) * 0.12;
-    return [[sx + dx, sy + dy], [sx + 2 * dx, sy + 2 * dy]];
-  };
-  const frames = [];
-  for (let t = 0; t < duration; t += 1 / 15) {
-    const [le, lw] = arm(0.58, 0.32, +1, 1.4 * Math.sin(Math.PI * t));
-    const [re, rw] = arm(0.42, 0.32, -1, 1.4 * Math.sin(Math.PI * t + 1.5));
-    const pts = [[.5, .18], [.52, .16], [.48, .16], [.54, .17], [.46, .17], [.58, .32], [.42, .32],
-                 le, re, lw, rw, [.55, .58], [.45, .58], [.55, .76], [.45, .76], [.55, .92], [.45, .92]];
-    frames.push({ t, j: pts.map(([x, y]) => [x, y, 1]) });
-  }
-  return frames;
+  return null; 
 }
 
 // ---------- game flow ----------
@@ -78,7 +61,7 @@ async function start() {
   scoring = camOk && poseOk;
   noteEl.textContent = !camOk ? "No camera: practice mode, no score"
     : !poseOk ? "Pose tracking didn't load: practice mode, no score"
-    : ref.demo ? "Demo mode: scoring against a fake dancer" : "";
+    : ref === null ? "No reference: practice mode, no score" : "";
   noteEl.hidden = !noteEl.textContent;
   expectedTicks = Math.max(1, Math.floor((song.duration || 1) / TICK));
 
